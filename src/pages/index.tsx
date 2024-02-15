@@ -1,33 +1,35 @@
 
-import Link from "next/link";
+import Map from "@/components/Map";
+import Marker from "@/components/Marker";
+import { useState } from "react";
+import * as stores from "@/data/store_data.json";
+import StoreBox from "@/components/StoreBox";
+
 
 export default function Home() {
+
+  const [map, setMap] = useState('');
+  const [currentStore, setCurrentStore] = useState(null);
+  const storeDatas = stores["DATA"];
+
   return (
     <>
-      <h1>Map Index Page</h1>
-      <ul>
-        <li>
-          <Link href="/stores">맛집 목록</Link>
-        </li>
-        <li>
-          <Link href="/stores/new">맛집 생성</Link>
-        </li>
-        <li>
-          <Link href="/stores/1">맛집 상세 페이지</Link>
-        </li>
-        <li>
-          <Link href="/stores/1/edit">맛집 수정 페이지</Link>
-        </li>
-        <li>
-          <Link href="/users/login">로그인 페이지</Link>
-        </li>
-        <li>
-          <Link href="/users/mypage">마이페이지</Link>
-        </li>
-        <li>
-          <Link href="/users/likes">찜한 맛집</Link>
-        </li>
-      </ul>
+      <Map setMap={setMap} />
+      <Marker map={map} storeDatas={storeDatas} setCurrentStore={setCurrentStore} />
+      <StoreBox store={currentStore} setStore={setCurrentStore} />
     </>
-  );
+
+  ) ;
+}
+
+
+export async function getStaticProps() {
+  const stores = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/stores`
+  ).then((res) => res.json());
+
+  return {
+    props: { stores },
+    revalidate: 60 * 60,
+  }; // 60분마다 갱신
 }
