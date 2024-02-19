@@ -12,16 +12,16 @@ declare global {
 
 interface MapProps {
     map: any;
-    storeDatas : any[];
+    stores : any[];
     setCurrentStore : Dispatch<SetStateAction<any>>;
   }
 
-// 맵 객체에 마커를 그려주는게 핵심
-export default function Marker({map, storeDatas, setCurrentStore} : MapProps) {
+// 맵 객체에 (api로부터 받아온) 지도-식당 정보를 기반으로 마커를 그려준다.
+export default function Marker({map, stores, setCurrentStore} : MapProps) {
 
   const loadKakoMarkers = useCallback(() => {
     if (map) {
-      storeDatas?.map((store) => {
+      stores?.map((store) => {
         var imageSrc = store?.bizcnd_code_nm
             ? `/images/markers/${store?.bizcnd_code_nm}.png`
             : "/images/markers/default.png", // 마커이미지의 주소입니다
@@ -80,7 +80,7 @@ export default function Marker({map, storeDatas, setCurrentStore} : MapProps) {
       });
     }
 
-  }, [map, setCurrentStore, storeDatas]);
+  }, [map, setCurrentStore, stores]);
 
   useEffect(() => {
     loadKakoMarkers();    
@@ -89,7 +89,6 @@ export default function Marker({map, storeDatas, setCurrentStore} : MapProps) {
 
   return (
     <>
-      
     </>
   );
   

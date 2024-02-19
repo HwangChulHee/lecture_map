@@ -18,6 +18,8 @@ interface MapProps {
 }
 
 
+// Scipt 태그를 통해 kakao 객체에 maps 데이터를 설정해주고,
+// maps 데이터를 통해 map 객체를 가져온다.
 export default function Map({setMap} : MapProps) {
 
   const loadKakaoMap = () => {

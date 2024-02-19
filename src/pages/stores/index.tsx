@@ -43,7 +43,7 @@ export default function StoreListPage({ stores }: { stores: StoreType[] }) {
   );
 }
 
-
+// 해당 페이지가 열릴 때 마다 지도-식당 정보를 가져온다.
 export async function getServerSideProps() {
   const stores = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/stores`
