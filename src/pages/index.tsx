@@ -26,7 +26,7 @@ export default function Home({ stores }: { stores: StoreType[] }) {
   ) ;
 }
 
-// api를 통해 map 객체를 받아온다. 60분마다 갱신하도록 한다.
+// api를 통해 지도-음식정보 객체를 받아온다. 60분마다 갱신하도록 한다.
 export async function getStaticProps() {
   const stores = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/stores`

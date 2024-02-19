@@ -10,8 +10,8 @@ export default function StoreListPage({ stores }: { stores: StoreType[] }) {
             <div className="flex gap-x-4">
               <Image
                 src={
-                  store?.bizcnd_code_nm
-                    ? `/images/markers/${store?.bizcnd_code_nm}.png`
+                  store?.category
+                    ? `/images/markers/${store?.category}.png`
                     : "/images/markers/default.png"
                 }
                 width={48}
@@ -20,20 +20,20 @@ export default function StoreListPage({ stores }: { stores: StoreType[] }) {
               />
               <div>
                 <div className="text-sm font-semibold leading-6 text-gray-900">
-                  {store?.upso_nm}
+                  {store?.name}
                 </div>
                 <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                  {store?.upso_nm}
+                  {store?.storeType}
                 </div>
               </div>
             </div>
             <div className="hidden sm:flex sm:flex-col sm:items-end">
               <div className="text-sm font-semibold leading-6 text-gray-900">
-                {store?.rdn_code_nm}
+                {store?.address}
               </div>
               <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                {store?.tel_no || "번호없음"} | {store?.crtfc_gbn_nm} |{" "}
-                {store?.bizcnd_code_nm}
+                {store?.phone || "번호없음"} | {store?.foodCertifyName} |{" "}
+                {store?.category}
               </div>
             </div>
           </li>
@@ -43,7 +43,6 @@ export default function StoreListPage({ stores }: { stores: StoreType[] }) {
   );
 }
 
-// 해당 페이지가 열릴 때 마다 지도-식당 정보를 가져온다.
 export async function getServerSideProps() {
   const stores = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/stores`
